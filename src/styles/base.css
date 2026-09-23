@@ -1,0 +1,96 @@
+/* Base surface: apply `.ore-theme` to a root element (or <body>). */
+.ore-theme {
+  color: var(--ore-text);
+  font-family: var(--ore-font-body);
+  font-size: calc(var(--ore-rem) * 1.6);
+  line-height: calc(var(--ore-rem) * 2);
+}
+
+.ore-theme *,
+.ore-theme *::before,
+.ore-theme *::after {
+  box-sizing: border-box;
+}
+
+/*
+ * Specular / bevel overlay.
+ *
+ * Ore UI draws a 1-texel light edge on top+left and a second one on
+ * bottom+right as two stacked overlays; where they cross (top-right and
+ * bottom-left pixels) the alpha adds up, which is exactly what the 9-slice
+ * textures in the game contain. `.ore-spec` reproduces that with ::before and
+ * ::after. Set --_spec-top / --_spec-bottom and optionally --_spec-inset-bottom
+ * to keep the overlay above an elevation slab.
+ */
+.ore-spec {
+  position: relative;
+}
+
+.ore-spec::before,
+.ore-spec::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 var(--_spec-inset-bottom, 0) 0;
+  pointer-events: none;
+  border: 0 solid transparent;
+  z-index: 0;
+}
+
+.ore-spec::before {
+  border-top-width: var(--_spec-w, var(--ore-u));
+  border-left-width: var(--_spec-left, var(--_spec-w, var(--ore-u)));
+  border-color: var(--_spec-top, transparent);
+}
+
+.ore-spec::after {
+  border-bottom-width: var(--_spec-w, var(--ore-u));
+  border-right-width: var(--_spec-right, var(--_spec-w, var(--ore-u)));
+  border-color: var(--_spec-bottom, transparent);
+}
+
+/* Focus ring: 1 texel of white hugging the dark outline. */
+.ore-focusable:focus-visible,
+.ore-focus-within:has(:focus-visible) {
+  outline: var(--ore-u) solid var(--ore-focus);
+  outline-offset: 0;
+}
+
+.ore-icon {
+  display: inline-block;
+  flex: none;
+  shape-rendering: crispEdges;
+  image-rendering: pixelated;
+}
+
+@keyframes ore-shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(calc(var(--ore-rem) * 0.4));
+  }
+  75% {
+    transform: translateX(calc(var(--ore-rem) * -0.4));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes ore-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ore-theme *,
+  .ore-theme *::before,
+  .ore-theme *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}

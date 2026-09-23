@@ -1,0 +1,205 @@
+/*
+ * Pressable (Ore UI Button).
+ *
+ * Anatomy, 1 texel = --ore-u:
+ *   ┌───────────────┐  1 texel outline (#1e1e1f)
+ *   │▔▔▔▔▔▔▔▔▔▔▔▔▔▕│  1 texel specular: top+left / bottom+right overlays
+ *   │   face 4rem   │
+ *   │▁▁▁▁▁▁▁▁▁▁▁▁▁▁│
+ *   │███ slab ██████│  2 texels of "elevation" in the role's shadow colour
+ *   └───────────────┘
+ * When pressed the face drops by the slab height (margin-top) and the slab
+ * disappears, so the control's footprint never changes.
+ */
+.ore-button {
+  --_depth: var(--_elevation, calc(var(--ore-u) * 2));
+  --_face-height: calc(var(--ore-rem) * 4);
+  --_spec-inset-bottom: var(--_depth);
+  --_border: var(--ore-outline);
+  --_bg: var(--ore-neutral-bg);
+  --_slab: var(--ore-neutral-slab);
+  --_fg: var(--ore-neutral-fg);
+  --_spec-top: var(--ore-light-20);
+  --_spec-bottom: var(--ore-light-10);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--ore-rem) * 0.8);
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: calc(var(--_face-height) + var(--_depth) + var(--ore-u) * 2);
+  margin: 0;
+  padding: 0 calc(var(--ore-rem) * 2) var(--_depth);
+  border: var(--ore-u) solid var(--_border);
+  border-radius: 0;
+  background-color: var(--_bg);
+  box-shadow: inset 0 calc(var(--_depth) * -1) 0 0 var(--_slab);
+  color: var(--_fg);
+  font-family: var(--ore-font-ui);
+  font-size: calc(var(--ore-rem) * 1.6);
+  font-weight: 400;
+  line-height: calc(var(--ore-rem) * 2);
+  letter-spacing: var(--ore-letter-spacing);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+}
+
+.ore-button > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ore-button:focus-visible {
+  outline: var(--ore-u) solid var(--ore-focus);
+  outline-offset: 0;
+  z-index: 1;
+}
+
+/* Roles ---------------------------------------------------------------- */
+.ore-button[data-variant="primary"],
+.ore-button[data-variant="hero"] {
+  --_bg: var(--ore-primary-bg);
+  --_slab: var(--ore-primary-slab);
+  --_fg: var(--ore-primary-fg);
+  --_spec-top: var(--ore-primary-spec-top);
+  --_spec-bottom: var(--ore-primary-spec-bottom);
+}
+
+.ore-button[data-variant="secondary"] {
+  --_bg: var(--ore-secondary-bg);
+  --_slab: var(--ore-secondary-slab);
+  --_fg: var(--ore-secondary-fg);
+}
+
+/* The elevated secondary texture uses a pure black frame. */
+.ore-button[data-variant="secondary"][data-elevated] {
+  --_border: var(--ore-black);
+}
+
+.ore-button[data-variant="destructive"] {
+  --_bg: var(--ore-destructive-bg);
+  --_slab: var(--ore-destructive-slab);
+  --_fg: var(--ore-destructive-fg);
+}
+
+/* Hero: primary role + Minecraft Ten label with a drop shadow */
+.ore-button[data-variant="hero"] {
+  font-family: var(--ore-font-heading);
+  font-size: calc(var(--ore-rem) * 2);
+  line-height: calc(var(--ore-rem) * 2.4);
+  text-shadow: var(--ore-text-shadow);
+}
+
+/* States ---------------------------------------------------------------- */
+.ore-button:not(:disabled):not([data-disabled]):hover {
+  --_bg: var(--ore-neutral-bg-hover);
+  --_spec-top: var(--ore-light-40);
+  --_spec-bottom: var(--ore-light-30);
+}
+.ore-button[data-variant="primary"]:not(:disabled):not([data-disabled]):hover,
+.ore-button[data-variant="hero"]:not(:disabled):not([data-disabled]):hover {
+  --_bg: var(--ore-primary-bg-hover);
+  --_spec-top: var(--ore-primary-spec-top-hover);
+  --_spec-bottom: var(--ore-primary-spec-bottom-hover);
+}
+.ore-button[data-variant="secondary"]:not(:disabled):not([data-disabled]):hover {
+  --_bg: var(--ore-secondary-bg-hover);
+}
+.ore-button[data-variant="destructive"]:not(:disabled):not([data-disabled]):hover {
+  --_bg: var(--ore-destructive-bg-hover);
+}
+
+.ore-button:not(:disabled):not([data-disabled]):not([data-no-depress]):active,
+.ore-button[data-pressed]:not(:disabled):not([data-disabled]) {
+  --_bg: var(--ore-neutral-bg-pressed);
+  --_spec-top: var(--ore-light-20);
+  --_spec-bottom: var(--ore-light-10);
+}
+.ore-button[data-variant="primary"]:not(:disabled):not([data-disabled]):not([data-no-depress]):active,
+.ore-button[data-variant="hero"]:not(:disabled):not([data-disabled]):not([data-no-depress]):active,
+.ore-button[data-variant="primary"][data-pressed]:not(:disabled):not([data-disabled]),
+.ore-button[data-variant="hero"][data-pressed]:not(:disabled):not([data-disabled]) {
+  --_bg: var(--ore-primary-bg-pressed);
+  --_spec-top: var(--ore-primary-spec-top);
+  --_spec-bottom: var(--ore-primary-spec-bottom);
+}
+.ore-button[data-variant="secondary"]:not(:disabled):not([data-disabled]):not([data-no-depress]):active,
+.ore-button[data-variant="secondary"][data-pressed]:not(:disabled):not([data-disabled]) {
+  --_bg: var(--ore-secondary-bg-pressed);
+  --_border: var(--ore-outline);
+}
+.ore-button[data-variant="destructive"]:not(:disabled):not([data-disabled]):not([data-no-depress]):active,
+.ore-button[data-variant="destructive"][data-pressed]:not(:disabled):not([data-disabled]) {
+  --_bg: var(--ore-destructive-bg-pressed);
+}
+
+/* Depress: the face sinks into the slab. */
+.ore-button[data-elevated]:not(:disabled):not([data-disabled]):not([data-no-depress]):active,
+.ore-button[data-elevated][data-pressed]:not(:disabled):not([data-disabled]) {
+  margin-top: calc(var(--ore-u) * 2);
+  --_depth: 0px;
+}
+
+.ore-button:not([data-elevated]) {
+  --_elevation: 0px;
+}
+
+.ore-button:focus-visible {
+  --_border: var(--ore-outline);
+}
+
+.ore-button:disabled,
+.ore-button[data-disabled] {
+  --_border: var(--ore-disabled-outline);
+  --_bg: var(--ore-disabled-bg);
+  --_slab: var(--ore-disabled-slab);
+  --_fg: var(--ore-text-disabled);
+  --_spec-top: transparent;
+  --_spec-bottom: transparent;
+  cursor: default;
+  text-shadow: none;
+}
+
+/* Sizes ------------------------------------------------------------------ */
+.ore-button[data-size="icon"] {
+  padding-left: 0;
+  padding-right: 0;
+  width: calc(var(--_face-height) + var(--ore-u) * 2);
+}
+
+.ore-button[data-full-width] {
+  display: flex;
+  width: 100%;
+}
+
+.ore-button__icon {
+  width: calc(var(--ore-rem) * 2.4);
+  height: calc(var(--ore-rem) * 2.4);
+}
+
+.ore-button__label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Stack of buttons, e.g. modal footers (Ore uses 0.4rem gaps) */
+.ore-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ore-rem) * 0.4);
+}
+.ore-button-group[data-orientation="horizontal"] {
+  flex-direction: row;
+}
+.ore-button-group[data-orientation="horizontal"] > * {
+  flex: 1 0 0;
+}

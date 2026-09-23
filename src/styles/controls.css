@@ -1,0 +1,536 @@
+/* Checkbox ------------------------------------------------------------------
+ * 12x12 texel box, 1 texel frame, neutral50 when off, primary when on.
+ */
+.ore-checkbox {
+  --_bg: var(--ore-neutral50-bg);
+  --_spec-top: var(--ore-light-20);
+  --_spec-bottom: var(--ore-light-10);
+
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: calc(var(--ore-u) * 12);
+  height: calc(var(--ore-u) * 12);
+  margin: 0;
+  padding: 0;
+  border: var(--ore-u) solid var(--ore-outline);
+  border-radius: 0;
+  background-color: var(--_bg);
+  color: var(--ore-white);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+}
+.ore-checkbox:hover:not(:disabled) {
+  --_bg: var(--ore-neutral50-bg-hover);
+}
+.ore-checkbox:active:not(:disabled) {
+  --_bg: var(--ore-neutral50-bg-pressed);
+}
+.ore-checkbox[data-state="checked"],
+.ore-checkbox[data-state="indeterminate"] {
+  --_bg: var(--ore-primary-bg);
+  --_spec-top: var(--ore-primary-spec-top);
+  --_spec-bottom: var(--ore-primary-spec-bottom);
+}
+.ore-checkbox[data-state="checked"]:hover:not(:disabled),
+.ore-checkbox[data-state="indeterminate"]:hover:not(:disabled) {
+  --_bg: var(--ore-primary-bg-hover);
+  --_spec-top: var(--ore-primary-spec-top-hover);
+  --_spec-bottom: var(--ore-primary-spec-bottom-hover);
+}
+.ore-checkbox[data-state="checked"]:active:not(:disabled),
+.ore-checkbox[data-state="indeterminate"]:active:not(:disabled) {
+  --_bg: var(--ore-primary-bg-pressed);
+  --_spec-top: var(--ore-primary-spec-top);
+  --_spec-bottom: var(--ore-primary-spec-bottom);
+}
+.ore-checkbox:focus-visible {
+  outline: var(--ore-u) solid var(--ore-focus);
+  outline-offset: 0;
+}
+.ore-checkbox:disabled {
+  --_bg: var(--ore-gray-30);
+  --_spec-top: transparent;
+  --_spec-bottom: transparent;
+  border-color: var(--ore-disabled-outline);
+  color: var(--ore-gray-50);
+  cursor: default;
+}
+.ore-checkbox__indicator {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ore-checkbox__indicator .ore-icon {
+  width: calc(var(--ore-rem) * 1.6);
+  height: calc(var(--ore-rem) * 1.2);
+}
+
+/* Radio ----------------------------------------------------------------------
+ * A 45° rotated box with a four-tile "gem" in the middle when selected.
+ */
+.ore-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ore-rem) * 0.8);
+}
+.ore-radio-group[data-orientation="horizontal"] {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.ore-radio {
+  --_bg: var(--ore-neutral50-bg);
+  --_spec-top: var(--ore-light-20);
+  --_spec-bottom: var(--ore-light-10);
+
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: calc(var(--ore-rem) * 2);
+  height: calc(var(--ore-rem) * 2);
+  margin: 0 var(--ore-u);
+  padding: 0;
+  border: var(--ore-u) solid var(--ore-outline);
+  border-radius: 0;
+  background-color: var(--_bg);
+  transform: rotate(45deg);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+}
+.ore-radio:hover:not(:disabled) {
+  --_bg: var(--ore-neutral50-bg-hover);
+}
+.ore-radio:active:not(:disabled) {
+  --_bg: var(--ore-neutral50-bg-pressed);
+}
+.ore-radio[data-state="checked"] {
+  --_bg: var(--ore-primary-bg);
+  --_spec-top: var(--ore-primary-spec-top);
+  --_spec-bottom: var(--ore-primary-spec-bottom);
+}
+.ore-radio[data-state="checked"]:hover:not(:disabled) {
+  --_bg: var(--ore-primary-bg-hover);
+  --_spec-top: var(--ore-primary-spec-top-hover);
+  --_spec-bottom: var(--ore-primary-spec-bottom-hover);
+}
+.ore-radio:focus-visible {
+  outline: var(--ore-u) solid var(--ore-focus);
+  outline-offset: 0;
+}
+.ore-radio:disabled {
+  --_bg: var(--ore-gray-30);
+  --_spec-top: transparent;
+  --_spec-bottom: transparent;
+  border-color: var(--ore-disabled-outline);
+  cursor: default;
+}
+.ore-radio__indicator {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: calc(var(--ore-rem) * 0.8);
+  height: calc(var(--ore-rem) * 0.8);
+  background:
+    linear-gradient(var(--ore-white), var(--ore-white)) 0 0 / 50% 50% no-repeat,
+    linear-gradient(var(--ore-gray-10), var(--ore-gray-10)) 100% 0 / 50% 50% no-repeat,
+    linear-gradient(var(--ore-gray-10), var(--ore-gray-10)) 0 100% / 50% 50% no-repeat,
+    var(--_gem-shade, var(--ore-gray-20));
+}
+.ore-radio:disabled .ore-radio__indicator {
+  --_gem-shade: var(--ore-gray-30);
+}
+
+/* Option row shared by checkbox / radio / switch labels */
+.ore-choice {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--ore-rem) * 1.6);
+  min-height: calc(var(--ore-rem) * 4);
+  font-family: var(--ore-font-ui);
+  font-size: calc(var(--ore-rem) * 1.6);
+  line-height: calc(var(--ore-rem) * 2);
+  letter-spacing: var(--ore-letter-spacing);
+  color: var(--ore-text);
+  cursor: pointer;
+  user-select: none;
+}
+.ore-choice[data-disabled] {
+  color: var(--ore-text-dimmer);
+  cursor: default;
+}
+.ore-choice__text {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ore-rem) * 0.4);
+}
+.ore-choice__description {
+  font-size: calc(var(--ore-rem) * 1.4);
+  color: var(--ore-text-dimmer);
+}
+
+/* Switch -----------------------------------------------------------------
+ * 6rem x 2.8rem track split into an "I" (on, primary) and "O" (off,
+ * neutral50) half; a 3.2rem elevated knob (secondary) sits on top and pops
+ * 2 texels above the track. The knob travels with a stepped animation.
+ */
+.ore-switch {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  box-sizing: border-box;
+  width: calc(var(--ore-rem) * 6);
+  height: calc(var(--ore-rem) * 2.8);
+  margin: calc(var(--ore-u) * 2) 0 0;
+  padding: 0;
+  border: var(--ore-u) solid var(--ore-outline);
+  border-radius: 0;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  user-select: none;
+}
+.ore-switch__half {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+}
+.ore-switch__half[data-side="on"] {
+  --_spec-top: var(--ore-primary-spec-top);
+  --_spec-bottom: var(--ore-primary-spec-bottom);
+  --_spec-right: 0px;
+  background-color: var(--ore-primary-bg);
+}
+.ore-switch__half[data-side="off"] {
+  --_spec-top: var(--ore-light-20);
+  --_spec-bottom: var(--ore-light-10);
+  --_spec-left: 0px;
+  background-color: var(--ore-neutral50-bg);
+}
+.ore-switch__glyph {
+  position: relative;
+  z-index: 1;
+}
+.ore-switch__glyph[data-side="on"] {
+  width: var(--ore-u);
+  height: calc(var(--ore-rem) * 1.2);
+  margin-right: var(--ore-u);
+  background: var(--ore-white);
+}
+.ore-switch__glyph[data-side="off"] {
+  width: calc(var(--ore-rem) * 1.2);
+  height: calc(var(--ore-rem) * 1.2);
+  color: var(--ore-gray-80);
+}
+
+.ore-switch__thumb {
+  --_bg: var(--ore-thumb-bg);
+  --_slab: var(--ore-thumb-slab);
+  --_spec-top: var(--ore-thumb-spec-top);
+  --_spec-bottom: var(--ore-thumb-spec-bottom);
+  --_spec-inset-bottom: calc(var(--ore-u) * 2);
+
+  position: absolute;
+  bottom: calc(var(--ore-u) * -1);
+  left: calc(var(--ore-u) * -1);
+  z-index: 2;
+  display: block;
+  box-sizing: border-box;
+  width: calc(var(--ore-rem) * 3.2);
+  height: calc(var(--ore-rem) * 3.2);
+  border: var(--ore-u) solid var(--ore-outline);
+  background-color: var(--_bg);
+  box-shadow: inset 0 calc(var(--ore-u) * -2) 0 0 var(--_slab);
+}
+.ore-switch[data-state="checked"] .ore-switch__thumb {
+  left: calc(var(--ore-rem) * 2.4 + var(--ore-u));
+}
+.ore-switch:hover:not(:disabled) .ore-switch__thumb {
+  --_bg: var(--ore-thumb-bg-hover);
+  --_spec-top: var(--ore-thumb-spec-top-hover);
+  --_spec-bottom: var(--ore-thumb-spec-bottom-hover);
+}
+.ore-switch:focus-visible .ore-switch__thumb {
+  outline: var(--ore-u) solid var(--ore-focus);
+  outline-offset: 0;
+}
+
+.ore-switch[data-animate][data-state="checked"] .ore-switch__thumb {
+  animation: ore-switch-on 250ms step-start forwards;
+}
+.ore-switch[data-animate][data-state="unchecked"] .ore-switch__thumb {
+  animation: ore-switch-off 250ms step-start forwards;
+}
+
+@keyframes ore-switch-on {
+  0% {
+    left: calc(var(--ore-u) * -1);
+  }
+  25% {
+    left: calc(var(--ore-rem) * 0.6);
+    width: calc(var(--ore-rem) * 4);
+  }
+  50% {
+    left: calc(var(--ore-rem) * 2.4 + var(--ore-u));
+    width: calc(var(--ore-rem) * 3.2);
+  }
+  75% {
+    left: calc(var(--ore-rem) * 2.2 + var(--ore-u));
+  }
+  100% {
+    left: calc(var(--ore-rem) * 2.4 + var(--ore-u));
+  }
+}
+
+@keyframes ore-switch-off {
+  0% {
+    left: calc(var(--ore-rem) * 2.4 + var(--ore-u));
+  }
+  25% {
+    left: calc(var(--ore-rem) * 1.2);
+    width: calc(var(--ore-rem) * 4);
+  }
+  50% {
+    left: calc(var(--ore-u) * -1);
+    width: calc(var(--ore-rem) * 3.2);
+  }
+  75% {
+    left: calc(var(--ore-rem) * 0.2 - var(--ore-u));
+  }
+  100% {
+    left: calc(var(--ore-u) * -1);
+  }
+}
+
+.ore-switch:disabled {
+  border-color: var(--ore-disabled-outline);
+  cursor: default;
+}
+.ore-switch:disabled .ore-switch__half {
+  --_spec-top: transparent;
+  --_spec-bottom: transparent;
+  background-color: var(--ore-gray-30);
+}
+.ore-switch:disabled .ore-switch__glyph[data-side="on"] {
+  background: var(--ore-gray-40);
+}
+.ore-switch:disabled .ore-switch__glyph[data-side="off"] {
+  color: var(--ore-gray-50);
+}
+.ore-switch:disabled .ore-switch__thumb {
+  --_bg: var(--ore-gray-30);
+  --_slab: var(--ore-gray-40);
+  --_spec-top: transparent;
+  --_spec-bottom: transparent;
+  border-color: var(--ore-gray-50);
+}
+
+/* Slider --------------------------------------------------------------------
+ * 1.2rem track (neutral50) with a primary fill overlay and a 3.2rem
+ * elevated knob. Positions ease with Ore's springy cubic-bezier.
+ */
+.ore-slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: calc(var(--ore-rem) * 3.2);
+  touch-action: none;
+  user-select: none;
+}
+.ore-slider[data-disabled] {
+  cursor: default;
+}
+.ore-slider__track {
+  --_spec-top: var(--ore-light-20);
+  --_spec-bottom: var(--ore-light-10);
+
+  position: relative;
+  flex-grow: 1;
+  box-sizing: border-box;
+  height: calc(var(--ore-rem) * 1.2);
+  border: var(--ore-u) solid var(--ore-outline);
+  background-color: var(--ore-neutral50-bg);
+  cursor: pointer;
+}
+.ore-slider__range {
+  --_spec-top: var(--ore-primary-spec-top);
+  --_spec-bottom: var(--ore-primary-spec-bottom);
+
+  position: absolute;
+  top: calc(var(--ore-u) * -1);
+  bottom: calc(var(--ore-u) * -1);
+  box-sizing: border-box;
+  margin-left: calc(var(--ore-u) * -1);
+  border: var(--ore-u) solid var(--ore-outline);
+  background-color: var(--ore-primary-bg);
+  z-index: 1;
+  transition: right 0.3s var(--ore-ease-bounce);
+}
+.ore-slider__steps {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  z-index: 2;
+  pointer-events: none;
+}
+.ore-slider__step {
+  flex: 1;
+  border-right: var(--ore-u) solid var(--ore-outline);
+}
+.ore-slider__step:last-child {
+  border-right: 0;
+}
+.ore-slider > span:not(.ore-slider__track) {
+  z-index: 3;
+  transition: left 0.3s var(--ore-ease-bounce);
+}
+.ore-slider__thumb {
+  --_bg: var(--ore-thumb-bg);
+  --_slab: var(--ore-thumb-slab);
+  --_spec-top: var(--ore-thumb-spec-top);
+  --_spec-bottom: var(--ore-thumb-spec-bottom);
+  --_spec-inset-bottom: calc(var(--ore-u) * 2);
+
+  display: block;
+  box-sizing: border-box;
+  width: calc(var(--ore-rem) * 3.2);
+  height: calc(var(--ore-rem) * 3.2);
+  border: var(--ore-u) solid var(--ore-outline);
+  background-color: var(--_bg);
+  box-shadow: inset 0 calc(var(--ore-u) * -2) 0 0 var(--_slab);
+  cursor: pointer;
+  outline: none;
+}
+.ore-slider__thumb:hover,
+.ore-slider__thumb:active {
+  --_bg: var(--ore-thumb-bg-hover);
+  --_spec-top: var(--ore-thumb-spec-top-hover);
+  --_spec-bottom: var(--ore-thumb-spec-bottom-hover);
+}
+.ore-slider__thumb:focus-visible {
+  outline: var(--ore-u) solid var(--ore-focus);
+  outline-offset: 0;
+}
+.ore-slider[data-disabled] .ore-slider__track,
+.ore-slider[data-disabled] .ore-slider__thumb {
+  cursor: default;
+}
+.ore-slider[data-disabled] .ore-slider__range {
+  --_spec-top: transparent;
+  --_spec-bottom: transparent;
+  background-color: var(--ore-gray-30);
+}
+.ore-slider[data-disabled] .ore-slider__thumb {
+  --_bg: var(--ore-gray-30);
+  --_slab: var(--ore-gray-40);
+  --_spec-top: transparent;
+  --_spec-bottom: transparent;
+}
+
+/* Field wrapper with a title / value row, as used in the settings screens */
+.ore-field {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ore-rem) * 0.8);
+}
+.ore-field__header {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(var(--ore-rem) * 0.8);
+  font-family: var(--ore-font-ui);
+  font-size: calc(var(--ore-rem) * 1.6);
+  line-height: calc(var(--ore-rem) * 2);
+  letter-spacing: var(--ore-letter-spacing);
+  color: var(--ore-text);
+}
+.ore-field__description {
+  font-family: var(--ore-font-ui);
+  font-size: calc(var(--ore-rem) * 1.4);
+  line-height: calc(var(--ore-rem) * 2);
+  letter-spacing: var(--ore-letter-spacing);
+  color: var(--ore-text-dimmer);
+}
+.ore-field[data-disabled] .ore-field__header {
+  color: var(--ore-text-dimmer);
+}
+
+.ore-label {
+  font-family: var(--ore-font-ui);
+  font-size: calc(var(--ore-rem) * 1.6);
+  line-height: calc(var(--ore-rem) * 2);
+  letter-spacing: var(--ore-letter-spacing);
+  color: var(--ore-text);
+}
+
+/* Text field -----------------------------------------------------------------
+ * neutral80 well with a 2-texel inner shadow along the top edge and the
+ * signature green caret.
+ */
+.ore-input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(var(--ore-rem) * 4.8);
+  margin: 0;
+  padding: calc(var(--ore-rem) * 1.6 - var(--ore-u) * 3) calc(var(--ore-rem) * 1.2)
+    calc(var(--ore-rem) * 0.8 - var(--ore-u-thin));
+  border: var(--ore-u) solid var(--ore-outline);
+  border-radius: 0;
+  background-color: var(--ore-neutral80-bg);
+  box-shadow: inset 0 calc(var(--ore-u) * 2) 0 0 var(--ore-neutral80-shadow);
+  color: var(--ore-text);
+  caret-color: var(--ore-caret);
+  font-family: var(--ore-font-ui);
+  font-size: calc(var(--ore-rem) * 1.6);
+  line-height: calc(var(--ore-rem) * 2.8 - var(--ore-u-thin));
+  letter-spacing: var(--ore-letter-spacing);
+  outline: none;
+  appearance: none;
+}
+textarea.ore-input {
+  line-height: calc(var(--ore-rem) * 2);
+  padding-top: calc(var(--ore-rem) * 1.6 - var(--ore-u));
+  padding-bottom: calc(var(--ore-rem) * 1.2);
+  resize: vertical;
+}
+.ore-input::placeholder {
+  color: var(--ore-text-dimmest);
+  opacity: 1;
+}
+.ore-input:hover:not(:disabled),
+.ore-input:focus {
+  background-color: var(--ore-neutral80-bg-hover);
+}
+.ore-input:focus-visible,
+.ore-input:focus {
+  outline: var(--ore-u) solid var(--ore-focus);
+  outline-offset: 0;
+}
+.ore-input:disabled {
+  border-color: var(--ore-gray-50);
+  background-color: var(--ore-gray-30);
+  box-shadow: none;
+  color: var(--ore-text-disabled);
+}
+.ore-input:disabled::placeholder {
+  color: var(--ore-gray-50);
+}
+.ore-input[aria-invalid="true"],
+.ore-input[data-shake] {
+  animation: ore-shake 200ms 1;
+}

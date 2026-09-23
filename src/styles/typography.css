@@ -1,0 +1,107 @@
+/* Ore UI text styles (names match the in-game Typography component). */
+.ore-text {
+  margin: 0;
+  font-weight: 400;
+  color: var(--_text-color, inherit);
+}
+
+.ore-text[data-type="header1"],
+.ore-text[data-type="header2"],
+.ore-text[data-type="header3"],
+.ore-text[data-type="header4A"],
+.ore-text[data-type="header5A"],
+.ore-text[data-type="sectionHeader"] {
+  font-family: var(--ore-font-heading);
+  letter-spacing: var(--ore-letter-spacing);
+}
+
+.ore-text[data-type="header1"] {
+  font-size: calc(var(--ore-rem) * 6.4);
+  line-height: calc(var(--ore-rem) * 8);
+}
+.ore-text[data-type="header2"] {
+  font-size: calc(var(--ore-rem) * 4.8);
+  line-height: calc(var(--ore-rem) * 6);
+}
+.ore-text[data-type="header3"] {
+  font-size: calc(var(--ore-rem) * 3.2);
+  line-height: calc(var(--ore-rem) * 4);
+}
+.ore-text[data-type="header4A"],
+.ore-text[data-type="header4B"] {
+  font-size: calc(var(--ore-rem) * 2.4);
+  line-height: calc(var(--ore-rem) * 2.8);
+}
+.ore-text[data-type="header5A"],
+.ore-text[data-type="header5B"] {
+  font-size: calc(var(--ore-rem) * 2);
+  line-height: calc(var(--ore-rem) * 2.4);
+}
+.ore-text[data-type="sectionHeader"] {
+  font-size: calc(var(--ore-rem) * 1.6);
+  line-height: calc(var(--ore-rem) * 2);
+}
+
+.ore-text[data-type="header4B"],
+.ore-text[data-type="header5B"],
+.ore-text[data-type="body"],
+.ore-text[data-type="captionTiny"],
+.ore-text[data-type="captionShort"] {
+  font-family: var(--ore-font-ui);
+  letter-spacing: var(--ore-letter-spacing);
+}
+
+.ore-text[data-type="subtitle1"],
+.ore-text[data-type="subtitle2"] {
+  font-family: var(--ore-font-subheading);
+  font-weight: 700;
+  letter-spacing: var(--ore-letter-spacing-wide);
+}
+.ore-text[data-type="subtitle1"] {
+  font-size: calc(var(--ore-rem) * 2.4);
+  line-height: calc(var(--ore-rem) * 3.6);
+}
+.ore-text[data-type="subtitle2"] {
+  font-size: calc(var(--ore-rem) * 2);
+  line-height: calc(var(--ore-rem) * 3.2);
+}
+
+.ore-text[data-type="body"],
+.ore-text[data-type="paragraphs"] {
+  font-size: calc(var(--ore-rem) * 1.6);
+  line-height: calc(var(--ore-rem) * 2);
+}
+.ore-text[data-type="paragraphs"] {
+  font-family: var(--ore-font-body);
+  letter-spacing: var(--ore-letter-spacing-wide);
+}
+
+.ore-text[data-type="captionTiny"] {
+  font-size: calc(var(--ore-rem) * 1);
+  line-height: calc(var(--ore-rem) * 1.2);
+}
+.ore-text[data-type="captionShort"],
+.ore-text[data-type="captionLong"] {
+  font-size: calc(var(--ore-rem) * 1.4);
+  line-height: calc(var(--ore-rem) * 2);
+}
+.ore-text[data-type="captionLong"] {
+  font-family: var(--ore-font-body);
+  letter-spacing: var(--ore-letter-spacing);
+}
+
+.ore-text[data-variant="dimmer"] {
+  color: var(--ore-text-dimmer);
+}
+.ore-text[data-variant="dimmest"] {
+  color: var(--ore-text-dimmest);
+}
+.ore-text[data-shadow] {
+  text-shadow: var(--ore-text-shadow);
+}
+.ore-text[data-align="center"] {
+  text-align: center;
+}
+.ore-text[data-align="right"] {
+  text-align: right;
+}

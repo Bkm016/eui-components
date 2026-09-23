@@ -1,0 +1,10 @@
+/*
+ * Mojang's Minecraft fonts are not redistributable, so they are not part of
+ * this repository. Copy them from your own Minecraft Bedrock install
+ * (data/gui/dist/hbui/fonts) into this folder to preview the exact look.
+ * Without them the kit falls back to Noto Sans.
+ */
+@font-face { font-family: "Minecraft Ten v2"; src: url("./Minecraft-Ten-ed29a.otf"); }
+@font-face { font-family: "Minecraft Seven v2"; src: url("./Minecraft-Seven-66398.otf"); }
+@font-face { font-family: "Minecraft Five v2"; src: url("./Minecraft-Five-48bb3.otf"); }
+@font-face { font-family: "Minecraft Five v2"; font-weight: 700; src: url("./Minecraft-Five-Bold-4ded8.otf"); }

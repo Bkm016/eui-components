@@ -1,0 +1,475 @@
+/* Panel --------------------------------------------------------------------- */
+.ore-panel {
+  --_bg: var(--ore-surface-neutral);
+  --_spec-top: var(--ore-bevel-top);
+  --_spec-bottom: var(--ore-bevel-bottom);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border: var(--ore-u) solid var(--ore-outline);
+  background-color: var(--_bg);
+  color: var(--ore-text);
+}
+.ore-panel[data-variant="dark"] {
+  --_bg: var(--ore-surface-neutral-80);
+}
+.ore-panel[data-variant="darkest"] {
+  --_bg: var(--ore-surface-neutral-100);
+}
+.ore-panel[data-variant="paper"] {
+  --_bg: var(--ore-surface-paper);
+  color: var(--ore-black);
+}
+.ore-panel[data-padded] {
+  padding: calc(var(--ore-rem) * 1.6);
+}
+.ore-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Divider: a reversed bevel (dark line over a faint highlight) */
+.ore-separator {
+  flex: none;
+  border: 0;
+  margin: 0;
+}
+.ore-separator[data-orientation="horizontal"] {
+  width: 100%;
+  height: calc(var(--ore-u) * 2);
+  border-top: var(--ore-u) solid var(--ore-bevel-bottom);
+  border-bottom: var(--ore-u) solid var(--ore-bevel-top);
+}
+.ore-separator[data-orientation="vertical"] {
+  align-self: stretch;
+  width: calc(var(--ore-u) * 2);
+  border-left: var(--ore-u) solid var(--ore-bevel-bottom);
+  border-right: var(--ore-u) solid var(--ore-bevel-top);
+}
+
+/* Progress bar ---------------------------------------------------------------
+ * 0.4rem (or 0.8rem tall) neutral80 track with half-texel bevels and the
+ * informative blue fill.
+ */
+.ore-progress {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(var(--ore-rem) * 0.4);
+  background-color: var(--ore-surface-neutral-80);
+}
+.ore-progress[data-size="tall"] {
+  height: calc(var(--ore-rem) * 0.8);
+}
+.ore-progress::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-top: var(--ore-u-thin) solid var(--ore-bevel-bottom);
+  border-bottom: var(--ore-u-thin) solid var(--ore-bevel-top);
+  pointer-events: none;
+}
+.ore-progress__indicator {
+  position: relative;
+  display: block;
+  height: 100%;
+  background-color: var(--_fill, var(--ore-blue));
+  transition: width 0.3s var(--ore-ease-bounce);
+}
+.ore-progress__indicator::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-top: var(--ore-u-thin) solid var(--ore-bevel-top);
+  border-bottom: var(--ore-u-thin) solid var(--ore-bevel-bottom);
+  border-left: var(--ore-u-thin) solid var(--ore-bevel-top);
+}
+
+/* Title bar (modal header / screen header) ----------------------------------- */
+.ore-titlebar {
+  --_spec-top: var(--ore-light-20);
+  --_spec-bottom: var(--ore-light-10);
+
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: calc(var(--ore-rem) * 4.8);
+  padding: 0 calc(var(--ore-rem) * 0.4);
+  background-color: var(--ore-surface-neutral);
+  box-shadow: 0 var(--ore-u) 0 0 var(--ore-neutral-slab);
+  margin-bottom: var(--ore-u);
+  color: var(--ore-text);
+}
+.ore-titlebar__side {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: calc(var(--ore-rem) * 4);
+  height: calc(var(--ore-rem) * 4.8);
+}
+.ore-titlebar__title {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--ore-font-heading);
+  font-size: calc(var(--ore-rem) * 2);
+  font-weight: 400;
+  line-height: calc(var(--ore-rem) * 2.4);
+  letter-spacing: var(--ore-letter-spacing);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Borderless icon action inside a title bar (close / back) */
+.ore-icon-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ore-text);
+  cursor: pointer;
+  outline: none;
+}
+.ore-icon-action:hover {
+  background-color: var(--ore-shade-10);
+}
+.ore-icon-action:active {
+  background-color: var(--ore-shade-30);
+}
+.ore-icon-action:focus-visible {
+  outline: var(--ore-u) solid var(--ore-focus);
+  outline-offset: calc(var(--ore-u) * -1);
+}
+.ore-icon-action .ore-icon {
+  width: calc(var(--ore-rem) * 2);
+  height: calc(var(--ore-rem) * 2);
+}
+
+/* Modal (Dialog) --------------------------------------------------------------- */
+.ore-dialog__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: var(--ore-overlay);
+  animation: ore-fade-in 150ms ease-out;
+}
+.ore-dialog__content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: calc(100% - var(--ore-rem) * 2.4);
+  max-width: calc(var(--ore-rem) * 47.6);
+  max-height: calc(100% - var(--ore-rem) * 2.4);
+  border: var(--ore-u) solid var(--ore-outline);
+  background-color: var(--ore-surface-neutral-80);
+  color: var(--ore-text);
+  transform: translate(-50%, -50%);
+  outline: none;
+  animation: ore-fade-in 150ms ease-out;
+}
+.ore-dialog__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: calc(var(--ore-rem) * 1.6);
+  background-color: var(--ore-surface-neutral-80);
+  font-family: var(--ore-font-body);
+  font-size: calc(var(--ore-rem) * 1.4);
+  line-height: calc(var(--ore-rem) * 2);
+  letter-spacing: var(--ore-letter-spacing);
+  overflow-wrap: break-word;
+}
+.ore-dialog__body > * + * {
+  margin-top: calc(var(--ore-rem) * 2);
+}
+.ore-dialog__footer {
+  --_spec-top: var(--ore-bevel-top);
+  --_spec-bottom: var(--ore-bevel-bottom);
+  --_spec-left: 0px;
+  --_spec-right: 0px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ore-rem) * 0.4);
+  padding: calc(var(--ore-rem) * 1.6);
+  background-color: var(--ore-surface-neutral);
+}
+.ore-dialog__footer[data-orientation="horizontal"] {
+  flex-direction: row;
+}
+.ore-dialog__footer[data-orientation="horizontal"] > * {
+  flex: 1 0 0;
+}
+.ore-dialog__footer > * {
+  z-index: 1;
+}
+
+/* Tabs (TabBar) ------------------------------------------------------------------
+ * Each tab is an elevated neutral pressable; the selected tab sits depressed.
+ */
+.ore-tabs {
+  display: flex;
+  flex-direction: column;
+}
+.ore-tabs__list {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+.ore-tabs__trigger {
+  --_depth: calc(var(--ore-u) * 2);
+  --_spec-inset-bottom: var(--_depth);
+  --_bg: var(--ore-neutral-bg);
+  --_spec-top: var(--ore-light-20);
+  --_spec-bottom: var(--ore-light-10);
+
+  position: relative;
+  display: inline-flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--ore-rem) * 0.8);
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: calc(var(--ore-rem) * 4 + var(--_depth) + var(--ore-u) * 2);
+  margin: 0;
+  padding: 0 calc(var(--ore-rem) * 1.6) var(--_depth);
+  border: var(--ore-u) solid var(--ore-outline);
+  border-radius: 0;
+  background-color: var(--_bg);
+  box-shadow: inset 0 calc(var(--_depth) * -1) 0 0 var(--ore-neutral-slab);
+  color: var(--ore-text);
+  font-family: var(--ore-font-ui);
+  font-size: calc(var(--ore-rem) * 1.6);
+  line-height: calc(var(--ore-rem) * 2);
+  letter-spacing: var(--ore-letter-spacing);
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+}
+.ore-tabs__trigger + .ore-tabs__trigger {
+  margin-left: calc(var(--ore-u) * -1);
+}
+.ore-tabs__trigger > * {
+  position: relative;
+  z-index: 1;
+}
+.ore-tabs__trigger:hover:not(:disabled) {
+  --_bg: var(--ore-neutral-bg-hover);
+}
+.ore-tabs__trigger[data-state="active"],
+.ore-tabs__trigger:active:not(:disabled) {
+  --_bg: var(--ore-neutral-bg-pressed);
+  --_depth: 0px;
+  margin-top: calc(var(--ore-u) * 2);
+}
+.ore-tabs__trigger:focus-visible {
+  outline: var(--ore-u) solid var(--ore-focus);
+  outline-offset: 0;
+  z-index: 2;
+}
+.ore-tabs__trigger:disabled {
+  --_spec-top: transparent;
+  --_spec-bottom: transparent;
+  color: var(--ore-text-disabled);
+  cursor: default;
+}
+.ore-tabs__content {
+  outline: none;
+}
+.ore-tabs__content:focus-visible {
+  outline: var(--ore-u) solid var(--ore-focus);
+}
+
+/* Dropdown / Select ------------------------------------------------------------ */
+.ore-select__trigger {
+  --_face-height: calc(var(--ore-rem) * 4.2);
+  justify-content: space-between;
+  width: 100%;
+  padding-left: calc(var(--ore-rem) * 1.6);
+  padding-right: calc(var(--ore-rem) * 1.6);
+  text-align: left;
+}
+.ore-select__trigger[data-placeholder] .ore-select__value {
+  font-style: italic;
+}
+.ore-select__value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+.ore-select__arrow {
+  width: calc(var(--ore-rem) * 1.6);
+  height: calc(var(--ore-rem) * 0.8);
+  margin-top: calc(var(--ore-rem) * 0.4);
+}
+
+/* The Ore dropdown list opens over its trigger: 1 texel frame + items. */
+.ore-menu {
+  z-index: 1000;
+  box-sizing: border-box;
+  min-width: calc(var(--ore-rem) * 16);
+  max-height: min(calc(var(--ore-rem) * 30), var(--radix-select-content-available-height, 100vh), var(--radix-dropdown-menu-content-available-height, 100vh));
+  overflow-y: auto;
+  border: var(--ore-u) solid var(--ore-outline);
+  background-color: var(--ore-outline);
+  color: var(--ore-text);
+  outline: none;
+  animation: ore-fade-in 100ms ease-out;
+}
+.ore-menu[data-select] {
+  width: var(--radix-select-trigger-width);
+}
+/* Overlap the trigger (transform keeps Radix's collision maths intact). */
+.ore-menu[data-select][data-side="bottom"] {
+  transform: translateY(calc(var(--radix-select-trigger-height) * -1));
+}
+.ore-menu[data-select][data-side="top"] {
+  transform: translateY(var(--radix-select-trigger-height));
+}
+.ore-menu__viewport {
+  display: flex;
+  flex-direction: column;
+  border-bottom: var(--ore-u) solid var(--ore-outline);
+}
+.ore-menu__item {
+  --_bg: var(--ore-neutral60-bg);
+  --_spec-top: var(--ore-bevel-top);
+  --_spec-bottom: var(--ore-bevel-bottom);
+
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--ore-rem) * 0.8);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(var(--ore-rem) * 4.8);
+  padding: 0 calc(var(--ore-rem) * 1.6);
+  border: var(--ore-u) solid var(--ore-outline);
+  border-bottom-width: 0;
+  background-color: var(--_bg);
+  font-family: var(--ore-font-ui);
+  font-size: calc(var(--ore-rem) * 1.6);
+  line-height: calc(var(--ore-rem) * 2);
+  letter-spacing: var(--ore-letter-spacing);
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+.ore-menu__item > * {
+  position: relative;
+  z-index: 1;
+}
+.ore-menu__item[data-highlighted] {
+  --_bg: var(--ore-neutral60-bg-hover);
+}
+.ore-menu__item:active,
+.ore-menu__item[data-state="checked"]:active {
+  --_bg: var(--ore-neutral60-bg-pressed);
+}
+.ore-menu__item[data-highlighted]:focus-visible {
+  outline: var(--ore-u) solid var(--ore-focus);
+  outline-offset: calc(var(--ore-u) * -1);
+}
+.ore-menu__item[data-disabled] {
+  color: var(--ore-text-dimmest);
+  cursor: default;
+}
+.ore-menu__item-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--ore-rem) * 1.6);
+  height: calc(var(--ore-rem) * 1.2);
+}
+.ore-menu__item-indicator .ore-icon {
+  width: 100%;
+  height: 100%;
+}
+.ore-menu__label {
+  padding: calc(var(--ore-rem) * 0.8) calc(var(--ore-rem) * 1.6);
+  border: var(--ore-u) solid var(--ore-outline);
+  border-bottom-width: 0;
+  background-color: var(--ore-surface-neutral-80);
+  color: var(--ore-text-dimmer);
+  font-family: var(--ore-font-ui);
+  font-size: calc(var(--ore-rem) * 1.4);
+  line-height: calc(var(--ore-rem) * 2);
+  letter-spacing: var(--ore-letter-spacing);
+}
+.ore-menu__separator {
+  height: calc(var(--ore-u) * 2);
+  background-color: var(--ore-outline);
+}
+
+/* Tooltip (Ore-styled; the in-game menus don't ship a tooltip primitive) */
+.ore-tooltip {
+  --_spec-top: var(--ore-bevel-top);
+  --_spec-bottom: var(--ore-bevel-bottom);
+
+  position: relative;
+  z-index: 1000;
+  max-width: calc(var(--ore-rem) * 32);
+  padding: calc(var(--ore-rem) * 0.8) calc(var(--ore-rem) * 1.2);
+  border: var(--ore-u) solid var(--ore-outline);
+  background-color: var(--ore-surface-neutral-80);
+  color: var(--ore-text);
+  font-family: var(--ore-font-ui);
+  font-size: calc(var(--ore-rem) * 1.4);
+  line-height: calc(var(--ore-rem) * 2);
+  letter-spacing: var(--ore-letter-spacing);
+  animation: ore-fade-in 100ms ease-out;
+}
+.ore-tooltip > * {
+  position: relative;
+  z-index: 1;
+}
+.ore-tooltip__arrow {
+  fill: var(--ore-outline);
+}
+
+/* Scrollbar in Ore style for scrollable surfaces */
+.ore-scroll {
+  scrollbar-color: var(--ore-gray-20) var(--ore-gray-80);
+  scrollbar-width: auto;
+}
+.ore-scroll::-webkit-scrollbar {
+  width: calc(var(--ore-rem) * 0.8);
+}
+.ore-scroll::-webkit-scrollbar-track {
+  background: var(--ore-gray-80);
+}
+.ore-scroll::-webkit-scrollbar-thumb {
+  background: var(--ore-gray-20);
+  border: var(--ore-u) solid var(--ore-outline);
+}

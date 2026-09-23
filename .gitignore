@@ -1,0 +1,7 @@
+node_modules
+dist
+playground/dist
+playground/public/fonts/*.otf
+playground/public/fonts/*.ttf
+*.log
+.DS_Store

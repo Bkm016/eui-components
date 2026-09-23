@@ -1,0 +1,164 @@
+/*
+ * Ore UI design tokens.
+ *
+ * Values are taken from the Minecraft Bedrock Ore UI "vanilla" theme and the
+ * 9-slice pressable textures shipped with the game (gui/dist/hbui). Ore UI sets
+ * `html { font-size: 2.5 * guiScale px }`, so at 100% GUI scale 1rem = 10px and
+ * one texture texel is 0.2rem = 2px (`--base2Scale`). Everything below is
+ * expressed through `--ore-rem` so the whole kit can be re-scaled like the
+ * in-game "UI scale" option by changing a single variable.
+ */
+:root,
+.ore-theme {
+  /* Scale ---------------------------------------------------------------- */
+  --ore-rem: 10px;
+  --ore-u: calc(var(--ore-rem) / 5); /* one texel, base2Scale (2px) */
+  --ore-u-thin: calc(var(--ore-rem) / 10); /* half texel, base1Scale (1px) */
+
+  /* Raw palette ------------------------------------------------------------ */
+  --ore-white: #ffffff;
+  --ore-black: #000000;
+  --ore-green-10: #a0e081;
+  --ore-green-20: #6cc349;
+  --ore-green-30: #3c8527;
+  --ore-green-40: #2a641c;
+  --ore-green-50: #1d4d13;
+  --ore-gray-05: #f4f6f9;
+  --ore-gray-10: #e6e8eb;
+  --ore-gray-20: #d0d1d4;
+  --ore-gray-30: #b1b2b5;
+  --ore-gray-40: #8c8d90;
+  --ore-gray-50: #58585a;
+  --ore-gray-60: #48494a;
+  --ore-gray-70: #313233;
+  --ore-gray-80: #242425;
+  --ore-gray-90: #1e1e1f;
+  --ore-red-tint: #ff8080;
+  --ore-red-30: #ca3636;
+  --ore-red-40: #c02d2d;
+  --ore-red-50: #ad1d1d;
+  --ore-blue: #2e6be5;
+  --ore-blue-tint: #8cb3ff;
+  --ore-yellow: #ffe866;
+  --ore-orange: #d3791f;
+  --ore-progress-complement: #ffb366;
+
+  /* Light / shade overlays used for bevels and speculars */
+  --ore-light-10: rgba(255, 255, 255, 0.1);
+  --ore-light-20: rgba(255, 255, 255, 0.2);
+  --ore-light-30: rgba(255, 255, 255, 0.3);
+  --ore-light-40: rgba(255, 255, 255, 0.4);
+  --ore-light-60: rgba(255, 255, 255, 0.6);
+  --ore-light-80: rgba(255, 255, 255, 0.8);
+  --ore-shade-10: rgba(0, 0, 0, 0.1);
+  --ore-shade-25: rgba(0, 0, 0, 0.25);
+  --ore-shade-30: rgba(0, 0, 0, 0.3);
+  --ore-shade-40: rgba(0, 0, 0, 0.4);
+  --ore-shade-70: rgba(0, 0, 0, 0.7);
+  --ore-shade-80: rgba(0, 0, 0, 0.8);
+
+  /* Semantic surfaces (theme roles) ---------------------------------------- */
+  --ore-outline: var(--ore-gray-90); /* 1-texel dark frame around everything */
+  --ore-focus: var(--ore-white); /* focus ring drawn just outside the frame */
+  --ore-caret: var(--ore-green-20);
+  --ore-overlay: var(--ore-shade-70);
+
+  --ore-surface-neutral: var(--ore-gray-60); /* neutral */
+  --ore-surface-neutral-80: var(--ore-gray-70); /* neutral80 */
+  --ore-surface-neutral-100: var(--ore-gray-90); /* neutral100 */
+  --ore-surface-paper: var(--ore-white);
+
+  --ore-text: var(--ore-white);
+  --ore-text-dimmer: var(--ore-gray-20);
+  --ore-text-dimmest: var(--ore-gray-30);
+  --ore-text-disabled: var(--ore-gray-50);
+  --ore-text-dark: var(--ore-gray-90);
+
+  --ore-bevel-top: var(--ore-light-10);
+  --ore-bevel-bottom: var(--ore-shade-30);
+
+  /* Pressable roles: face / hovered / pressed / elevation slab / label */
+  --ore-neutral-bg: var(--ore-gray-60);
+  --ore-neutral-bg-hover: var(--ore-gray-50);
+  --ore-neutral-bg-pressed: var(--ore-gray-70);
+  --ore-neutral-slab: var(--ore-gray-70);
+  --ore-neutral-fg: var(--ore-white);
+
+  --ore-primary-bg: var(--ore-green-30);
+  --ore-primary-bg-hover: var(--ore-green-40);
+  --ore-primary-bg-pressed: var(--ore-green-50);
+  --ore-primary-slab: var(--ore-green-50);
+  --ore-primary-fg: var(--ore-white);
+  --ore-primary-spec-top: var(--ore-light-20);
+  --ore-primary-spec-bottom: var(--ore-light-10);
+  --ore-primary-spec-top-hover: var(--ore-light-40);
+  --ore-primary-spec-bottom-hover: var(--ore-light-30);
+
+  --ore-secondary-bg: var(--ore-gray-20);
+  --ore-secondary-bg-hover: var(--ore-gray-30);
+  --ore-secondary-bg-pressed: var(--ore-gray-30);
+  --ore-secondary-slab: var(--ore-gray-50);
+  --ore-secondary-fg: var(--ore-gray-90);
+
+  --ore-destructive-bg: var(--ore-red-30);
+  --ore-destructive-bg-hover: var(--ore-red-40);
+  --ore-destructive-bg-pressed: var(--ore-red-50);
+  --ore-destructive-slab: var(--ore-red-50);
+  --ore-destructive-fg: var(--ore-white);
+
+  --ore-disabled-bg: var(--ore-gray-20);
+  --ore-disabled-slab: var(--ore-gray-30);
+  --ore-disabled-outline: var(--ore-gray-40);
+
+  /* neutral50: unchecked checkbox / radio / switch / slider track */
+  --ore-neutral50-bg: var(--ore-gray-40);
+  --ore-neutral50-bg-hover: var(--ore-gray-30);
+  --ore-neutral50-bg-pressed: var(--ore-gray-50);
+
+  /* neutral60: dropdown items */
+  --ore-neutral60-bg: var(--ore-gray-50);
+  --ore-neutral60-bg-hover: var(--ore-gray-60);
+  --ore-neutral60-bg-pressed: var(--ore-gray-70);
+
+  /* neutral80: text fields and scroll content */
+  --ore-neutral80-bg: var(--ore-gray-70);
+  --ore-neutral80-bg-hover: var(--ore-gray-60);
+  --ore-neutral80-shadow: var(--ore-gray-80);
+
+  /* secondary "thumb" role used by switch and slider knobs */
+  --ore-thumb-bg: var(--ore-gray-20);
+  --ore-thumb-bg-hover: var(--ore-gray-30);
+  --ore-thumb-slab: var(--ore-gray-50);
+  --ore-thumb-spec-top: var(--ore-light-60);
+  --ore-thumb-spec-bottom: var(--ore-light-40);
+  --ore-thumb-spec-top-hover: var(--ore-light-80);
+  --ore-thumb-spec-bottom-hover: var(--ore-light-60);
+
+  /* Typography ------------------------------------------------------------- */
+  --ore-font-body: "Noto Sans", "Noto Sans SC", "Noto Sans TC", "Noto Sans JP",
+    "Noto Sans KR", system-ui, sans-serif;
+  --ore-font-heading: "Minecraft Ten v2", "Minecraft Ten", "MinecraftTen",
+    var(--ore-font-body);
+  --ore-font-subheading: "Minecraft Five v2", "Minecraft Five", "MinecraftFive",
+    var(--ore-font-body);
+  --ore-font-ui: "Minecraft Seven v2", "Minecraft Seven", "MinecraftSeven",
+    "Minecraft", var(--ore-font-body);
+  --ore-letter-spacing: calc(var(--ore-rem) * 0.04);
+  --ore-letter-spacing-wide: calc(var(--ore-rem) * 0.08);
+  --ore-text-shadow: var(--ore-u) var(--ore-u) 0 var(--ore-shade-30);
+
+  /* Motion ----------------------------------------------------------------- */
+  --ore-ease-bounce: cubic-bezier(0.39, 1.34, 0.66, 1.02);
+}
+
+/* Realms theme: swaps the primary role to the Realms purple */
+.ore-theme-realms {
+  --ore-primary-bg: #7345e5;
+  --ore-primary-bg-hover: #5d2cc6;
+  --ore-primary-bg-pressed: #4a1cac;
+  --ore-primary-slab: #4a1cac;
+  --ore-primary-spec-top: rgba(208, 131, 255, 0.5);
+  --ore-primary-spec-bottom: rgba(182, 81, 245, 0.4);
+  --ore-primary-spec-top-hover: rgba(208, 131, 255, 0.7);
+  --ore-primary-spec-bottom-hover: rgba(182, 81, 245, 0.6);
+}
