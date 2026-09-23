@@ -33,7 +33,8 @@
     "dev": "vite --config playground/vite.config.ts",
     "build:playground": "vite build --config playground/vite.config.ts",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "react": ">=18",

@@ -26,8 +26,12 @@ A Radix UI extension that reproduces the Minecraft Bedrock Ore UI look.
 
 ## 安装
 
+> 在线文档：部署后的站点首页即为文档（快速开始 / 组件文档 / 演示），本地运行 `npm run dev` 也能看到。
+
+这个包还没有发布到 npm，请直接从 GitHub 安装（安装时会自动构建 `dist`）：
+
 ```bash
-npm i @eui-components/ore-ui radix-ui react react-dom
+npm install github:Bkm016/eui-components#claude/minecraft-ore-ui-raduxui-cyrpqd react react-dom
 ```
 
 ```tsx
@@ -91,7 +95,7 @@ Ore UI 用到 Minecraft Ten（标题）、Minecraft Seven（UI）、Minecraft Fi
 
 ```bash
 npm install
-npm run dev        # 组件演示页 playground（Vite）
+npm run dev        # 文档站 + 演示页（Vite），Vercel 部署的也是它
 npm test           # vitest
 npm run typecheck
 npm run build      # dist/：ESM + CJS + d.ts + styles.css

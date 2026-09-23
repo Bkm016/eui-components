@@ -47,6 +47,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@eui-components/ore-ui";
+import { ComponentDocs, GettingStarted } from "./docs";
 
 const params = new URLSearchParams(location.search);
 
@@ -285,25 +286,49 @@ function Typography() {
   );
 }
 
+const PAGES = ["start", "docs", "demo"] as const;
+type Page = (typeof PAGES)[number];
+
+function initialPage(): Page {
+  const p = params.get("page");
+  if (params.has("static") || params.has("open-dialog") || params.has("open-select")) return "demo";
+  return PAGES.includes(p as Page) ? (p as Page) : "start";
+}
+
 function App() {
   const [realms, setRealms] = React.useState(false);
+  const [page, setPage] = React.useState<Page>(initialPage);
+  const changePage = (value: string) => {
+    setPage(value as Page);
+    const url = new URL(location.href);
+    url.searchParams.set("page", value);
+    url.hash = "";
+    history.replaceState(null, "", url);
+    window.scrollTo(0, 0);
+  };
   return (
     <div className={realms ? "pg ore-theme-realms" : "pg"}>
-      <TitleBar
-        title="Ore UI × Radix"
-        left={<TitleBarAction icon="back" />}
-        right={<TitleBarAction icon="close" />}
-      />
-      <main className="pg-main">
-        <div className="pg-row" style={{ justifyContent: "flex-end" }}>
-          <Switch label="Realms theme" checked={realms} onCheckedChange={setRealms} />
-        </div>
-        <Buttons />
-        <Controls />
-        <Inputs />
-        <Surfaces />
-        <Typography />
-      </main>
+      <TitleBar title="Ore UI × Radix" right={<Switch aria-label="Realms theme" checked={realms} onCheckedChange={setRealms} />} />
+      <Tabs value={page} onValueChange={changePage} className="pg-main">
+        <TabsList aria-label="页面" className="pg-nav">
+          <TabsTrigger value="start">快速开始</TabsTrigger>
+          <TabsTrigger value="docs">组件文档</TabsTrigger>
+          <TabsTrigger value="demo">演示</TabsTrigger>
+        </TabsList>
+        <TabsContent value="start">
+          <GettingStarted />
+        </TabsContent>
+        <TabsContent value="docs">
+          <ComponentDocs />
+        </TabsContent>
+        <TabsContent value="demo" className="pg-demo">
+          <Buttons />
+          <Controls />
+          <Inputs />
+          <Surfaces />
+          <Typography />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
