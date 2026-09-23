@@ -156,8 +156,8 @@
   --_border: var(--ore-outline);
 }
 
-.ore-button:disabled,
-.ore-button[data-disabled] {
+.ore-button.ore-button:disabled,
+.ore-button.ore-button[data-disabled] {
   --_border: var(--ore-disabled-outline);
   --_bg: var(--ore-disabled-bg);
   --_slab: var(--ore-disabled-slab);
